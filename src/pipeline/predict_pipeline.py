@@ -1,4 +1,4 @@
-import sys
+import numpy as np
 import pandas as pd
 from src.utilis import load_object
 from src.components.data_config import AppConfig
@@ -18,6 +18,7 @@ class DataClient:
         return df_client
 
     def predict_function(self, df):
+        df = df.replace((np.inf, -np.inf), np.nan).reset_index(drop=True)
         data_scaled= self.preprocessor.transform(df)
         data_scaled = pd.DataFrame(data_scaled, columns= list(df.columns))
         # pred= self.model.predict(data_scaled)

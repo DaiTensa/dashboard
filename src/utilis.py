@@ -1,8 +1,10 @@
 
-import os
-import sys
 import dill
+import requests
+import io
 
-def load_object(file_path):
-    with open(file_path, "rb") as file_obj:
-        return dill.load(file_obj)
+
+def load_object(url_path):
+    response = requests.get(url_path)
+    content = response.content
+    return dill.load(io.BytesIO(content))
